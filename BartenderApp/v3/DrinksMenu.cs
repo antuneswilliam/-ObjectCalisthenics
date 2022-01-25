@@ -1,6 +1,6 @@
 public class DrinksMenu
 {
-    private readonly Dictionary<string, Action> drinks;
+    private readonly Dictionary<string, Action> drinksMenu;
     private readonly Func<string> inputProvider;
     private readonly Action<string> outputProvider;
 
@@ -10,7 +10,7 @@ public class DrinksMenu
         this.inputProvider = inputProvider;
         this.outputProvider = outputProvider;
 
-        drinks = new Dictionary<string, Action>
+        drinksMenu = new Dictionary<string, Action>
         {
             {"beer", ServeBeer},
             {"juice", ServeJuice},
@@ -19,17 +19,20 @@ public class DrinksMenu
 
     public Action GetDrink(string drink)
     {
-        return drinks[drink];
+        if (!GetAvailableDrinks().Contains(drink))
+            return UnavailableDrink;
+
+        return drinksMenu[drink];
     }
 
     public IEnumerable<string> GetAvailableDrinks()
     {
-        return drinks.Keys;
+        return drinksMenu.Keys;
     }
 
-    private void UnavailableDrink(string drink)
+    private void UnavailableDrink()
     {
-        outputProvider($"Sorry mate but we don't do {drink}");
+        outputProvider($"Sorry mate but we don't do this one");
     }
 
     private void ServeJuice()
@@ -58,7 +61,7 @@ public class DrinksMenu
             return;
         }
 
-        outputProvider("Sorry but you're notold enough to drink");
+        outputProvider("Sorry but you're not old enough to drink");
     }
 
     private void HandleInvalidAge()

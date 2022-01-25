@@ -19,13 +19,8 @@ public class BartenderV3 : IBartender
 
         var drink = inputProvider() ?? string.Empty;
 
-        if (!drinksMenu.GetAvailableDrinks().Contains(drink))
-        {
-            outputProvider($"Sorry mate but we don't do {drink}");
-            return;
-        }
+        var serveDrink = drinksMenu.GetDrink(drink);
 
-        var drinkToDo = drinksMenu.GetDrink(drink);
-        drinkToDo();
+        serveDrink();
     }
 }
