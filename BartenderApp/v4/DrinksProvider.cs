@@ -20,7 +20,7 @@ public class DrinksProvider
     public IDrink GetDrink(string drink)
     {
         if (!AvailableDrinks().Contains(drink))
-            return new UnavailableDrink(outputProvider);
+            return new UnavailableDrink(outputProvider, drink);
 
         return drinksMenu[drink];
     }
